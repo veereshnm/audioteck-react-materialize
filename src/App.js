@@ -5,7 +5,7 @@ import M from "materialize-css";
 import recorderImg from "./images/recorder.jpg";
 
 
-const products = [
+const intialProducts = [
   {
     title: 'Turn Table',
     description: '',
@@ -273,8 +273,17 @@ const MainNav = () => {
   );
 }
 
+const getAsyncProducts = () => {
+  return Promise.resolve({data: {products: intialProducts}})
+}
+
+
 function App() {
+  const [products, setProducts] = React.useState([]);
   React.useEffect(() => {
+    getAsyncProducts().then(result => {
+      setProducts(result.data.products);
+    });
     M.AutoInit();
     console.log("Behavior before the component is added to the DOM");
   }, []);
